@@ -4,7 +4,7 @@ Personal Budget Calculator (or PBC) helps the user calculate their personal fina
 
 ![Am I Responsive image](assets/readme_images/pbc_air.png)
 
-View live site here: https://mwarddev.github.io/personal-budget-calculator/
+View live site here: https://insh7.github.io/Personal-Budget-Calculator/
 
 ## Contents
 * [Description](#personal-budget-calculator)
