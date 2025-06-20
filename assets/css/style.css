@@ -1,0 +1,358 @@
+/* Import fonts from google */
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Roboto&display=swap');
+
+/* Global styling */
+body {
+    background-color: #ffffff; 
+    font-family: 'Roboto', sans-serif;
+    color: #008600;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Heading fonts */
+h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Page header styling */
+#heading {
+    background: radial-gradient(#00b200, #008600);  
+    color: #ffffff;
+    font-size: 1.5rem;
+    width: 100%;
+    overflow: auto;    
+}
+
+#heading h1 {
+    margin: 20px 10%;
+}
+
+.container {
+    margin: 0 auto;
+    width: 70%;   
+}
+
+/* How to use box */
+#how-to-use {
+    width: 150px;
+    text-align: left;    
+    margin: 40px 0 20px 0;   
+}
+
+#how-to-use summary {
+    cursor: pointer;
+    list-style: none;
+}
+
+#how-to-use summary::-webkit-details-marker {
+    display: none;
+}
+
+#how-to-use summary::after {
+    content: '\24D8';
+    font-weight: 600;
+    color: #008600;
+    padding-left: 5px;
+}
+
+#how-to-use[open] summary::after {
+    content: '\24D8';
+    font-weight: 600;
+    color: #008600;
+    padding-left: 5px;
+}
+
+#how-to-info {
+    width: 265px;
+    height: auto;
+    border: solid 2px #008600;
+    border-radius: 25px;
+    background-color: #ffffff;
+    padding: 10px;
+    line-height: 1.2;
+    margin-top: 5px;
+}
+
+#green {
+    color: #00b200;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+#red {
+    color: #ff0000;
+}
+
+/* Currency selector */
+
+#currency {
+    padding: 2px;
+    margin-bottom: 20px;
+    color: #008600;
+    border-radius: 25px;
+    border: solid 2px #008600;
+}
+
+#currency-wrapper {
+    text-align: right;
+}
+
+/* Form data */
+
+.form-container {
+    width: 100%;
+    margin: 0 auto;
+}
+
+summary h2 {
+    text-transform: uppercase;
+    display: inline;
+    padding-left: 38px;
+
+}
+
+.drop {
+    list-style: none;
+    background: radial-gradient(#ffffff, #d1cfcf);
+    border-radius: 25px;
+    width: 70%;
+    margin: 5px auto;
+    cursor: pointer;
+    border: none;
+}
+
+.drop::-webkit-details-marker {
+    display: none;
+}
+
+.drop::after {
+    content: '\25BC';
+    font-size: 1.2rem;
+    color: grey;
+    float: right;
+    padding: 7px 20px 0 0;
+}
+
+details[open] .drop::after {
+    content: '\25B2';
+    font-size: 1.2rem;
+    color: grey;
+    float: right;
+    padding: 7px 20px 0 0;
+}
+
+.user-input {
+    margin: 15px auto;
+    width: 80%;
+}
+
+.user-input label, .new-box {
+    border: solid 0.5px #000000;
+    background-color: #ffffff;
+    border-radius: 25px;
+    padding: 2px 2px 2px 5px;
+    margin-right: 10px;
+    display: inline-block;
+    width: 30vw;
+    text-align: left;
+    border: solid 2px #00b200;
+    font-size: 1rem;    
+}
+
+.user-value {
+    padding: 3px 3px 3px 5px;
+    width: 30vw;
+    margin-right: 10px;
+    border-radius: 25px;
+    border-color: #00b200;
+    color: #008600;
+}
+
+.period {
+    padding: 2px;
+    color: #008600;
+    border-radius: 25px;
+    cursor: pointer;
+    border: solid 2px #00b200;
+}
+
+/* Add box button */
+
+.add-box {
+    width: 70%;
+    height: 34px;
+    margin: 0 auto;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.add-box-btn {
+    height: 34px;
+    font-size: 2rem;
+    color: #00b200;
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+    margin-bottom: 3px;
+}
+
+.add-box p {
+    text-align: left;
+    padding-left: 5px;
+    margin: 0;
+}
+
+/* remove box button */
+
+.rem-box {
+    width: 70%;
+    height: 34px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    align-self: flex-end;
+}
+
+.rem-box p {
+    padding-right: 5px;
+    margin: 0; 
+}
+
+.rem-box-btn {
+    font-size: 1.5rem;
+    color: #ff0000;
+    border: none;
+    background-color: unset;
+    cursor: pointer;
+}
+
+/* Calculate button */
+
+#calculate {
+    margin-top: 20px;
+}
+
+#calc-btn, #reset-btn {
+    width: 132px;
+    padding: 5px;
+    margin: 0 10px;
+    background-color: #ffffff;
+    color: #008600;
+    font-size: 1.2rem;
+    font-weight: 700;
+    border: solid 2px #008600;
+    border-radius: 25px;
+}
+
+#calc-btn:hover, #reset-btn:hover {
+    background-color: #008600;
+    color: #ffffff;
+}
+
+/*Footer*/
+
+footer {
+    height: 60px;
+    background: radial-gradient(#00b200, #008600);
+    color: #ffffff;
+}
+
+footer p {
+    padding-top: 22px;
+}
+
+/* Results section */
+
+#results p {
+    font-size: 1.5rem;
+    margin-top: 10px;
+}
+
+#results h3 {
+    margin-bottom: 10px;
+}
+
+#incomeTotal, #expenseTotal, #outcome {
+    width: 30%;
+    display: inline-block;
+}
+
+#chart {
+    width: 40%;
+    height: auto;
+    margin: 0 auto;
+    display: none;    
+}
+
+/* Media queries */
+
+/* For screens up to 1250px wide */
+
+@media screen and (max-width: 1250px) {
+    #chart {
+        width: 60%;
+    }
+}
+
+/* For screens up to 800px wide */
+
+@media screen and (max-width: 800px) {
+
+    #heading {
+        font-size: 1rem;
+    }
+
+    .drop, .user-input, .add-box, .rem-box, .container {
+        width: 90%;
+    }
+
+    .user-input label, .new-box {
+        width: 33vw;
+    }
+
+    #chart {
+        width: 80%;
+    }
+}
+
+/* For screens up to 560px wide */
+
+@media screen and (max-width: 560px) {
+
+    .user-input label, .new-box {
+        font-size: 0.8rem;
+        margin-right: 5px;
+    }
+    
+    .user-value {
+        width: 20vw;
+        margin-right: 5px;
+        padding: 2px 2px 2px 5px;
+    }
+
+    #results h3 {
+        font-size: 0.9rem;
+    }
+
+    #chart {
+        width: 100%;
+    }
+}
+
+/* For screens up to 360px wide */
+
+@media screen and (max-width: 360px) {
+    
+    .drop, .user-input, .add-box, .rem-box, .container {
+        width: 96%;
+    }
+
+    #calculate button {
+        margin: 2px;
+    }
+}
