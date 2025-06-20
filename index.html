@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Monthly Personal Budget Calculator">
+    <meta name="keywords" content="Budget, Calculator">
+    <meta name="author" content="Martin Ward">
+    <title>Personal Budget Calculator</title>
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/pbc_icon.ico"/>    
+    <link rel="stylesheet" href="assets/css/style.css">
+    <!--Load the AJAX API-->
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+</head>
+<body>
+    <header>
+        <div id="heading">
+            <h1>Personal Budget Calculator</h1>
+        </div>
+    </header>
+
+    <!-- How to use and currency selector section -->
+    <div id="wrapper">
+        <div class="container">
+            <details id="how-to-use" >
+                <summary aria-label="Click for a summary of how to use the calculator.">
+                    How to use
+                </summary>
+                <div id="how-to-info">
+                    <p>Select your currency then fill in the form with your predicted expenditure for the month.</p> 
+                    <p>Values must be greater than 0 and contain no more than 2 decimal places.</p> 
+                    <p>Each box has the option to calculate daily, weekly, monthly, or yearly. Select the appropriate option for each item. If an item is not applicable to you, leave the input box blank (this will be counted as 0). If more boxes are needed you can create more by clicking the <span id="green">+</span> button and remove them by clicking the <span id="red">&#x2716;</span> button.</p> 
+                    <p>Once all of your details have been entered, click the calculate button to view your monthly budget results.</p> 
+                    <p>Form data can be amended and re-calculated if you wish to see how the changes impact on the results.</p>
+                </div>
+            </details>
+        </div>
+        <div class="container" id="currency-wrapper">
+            <label for="currency">Select Currency</label>
+            <select name="currency" id="currency" >
+                <option value="₹" selected>₹ INR</option>
+                <option value="€">€ EUR</option>
+                <option value="$">$ USD</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Form Section -->
+    <section>
+        <div class="form-container">
+            <form>
+                <details open>
+                    <summary class="drop"><h2>Income</h2></summary>
+                    <div class="user-input">
+                        <label for="wages">Wages</label>
+                        <input type="number" id="wages" class="income user-value" name="wages" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="pension">Pension</label>
+                        <input type="number" id="pension" class="income user-value" name="pension" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="rent">Rent (received)</label>
+                        <input type="number" id="rent" class="income user-value" name="rent" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="child-sup-rec">Child Support</label>
+                        <input type="number" id="child-sup-rec" class="income user-value" name="child-sup-rec" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="benefits">Benefits</label>
+                        <input type="number" id="benefits" class="income user-value" name="benefits" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="income-btn">
+                        <button class="add-box-btn" id="income" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Finances & Debt</h2></summary>
+                    <div class="user-input">
+                        <label for="personal-loan">Personal Loan</label>
+                        <input type="number" id="personal-loan" class="expense finances user-value" name="personal-loan" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="student-loan">Student Loan</label>
+                        <input type="number" id="student-loan" class="expense finances user-value" name="student-loan" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="credit-cards">Credit Card/s</label>
+                        <input type="number" id="credit-cards" class="expense finances user-value" name="credit-cards" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="hire-purchase">Hire Purchase</label>
+                        <input type="number" id="hire-purchase" class="expense finances user-value" name="hire-purchase" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="child-sup">Child Support</label>
+                        <input type="number" id="child-sup" class="expense finances user-value" name="child-sup" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="finances-btn">
+                        <button class="add-box-btn expense" id="finances" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Savings</h2></summary>
+                    <div class="user-input">
+                        <label for="savings-pay">Savings Account</label>
+                        <input type="number" id="savings-pay" class="expense savings user-value" name="savings-pay" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="child-savings">Child Savings</label>
+                        <input type="number" id="child-savings" class="expense savings user-value" name="child-savings" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="savings-btn">
+                        <button class="add-box-btn expense" id="savings" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Household Bills</h2></summary>
+                    <div class="user-input">
+                        <label for="mortgage-rent">Mortgage/Rent</label>
+                        <input type="number" id="mortgage-rent" class="expense bills user-value" name="mortgage-rent" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="council-tax">Council Tax/Rates</label>
+                        <input type="number" id="council-tax" class="expense bills user-value" name="council-tax" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="gas">Gas</label>
+                        <input type="number" id="gas" class="expense bills user-value" name="gas" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="electricity">Electricity</label>
+                        <input type="number" id="electricity" class="expense bills user-value" name="electricity" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="water">Water</label>
+                        <input type="number" id="water" class="expense bills user-value" name="water" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="bills-btn">
+                        <button class="add-box-btn expense" id="bills" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Insurance</h2></summary>
+                    <div class="user-input">
+                        <label for="home-insurance">Home Insurance</label>
+                        <input type="number" id="home-insurance" class="expense insurance user-value" name="home-insurance" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="contents-insurance">Contents Insurance</label>
+                        <input type="number" id="contents-insurance" class="expense insurance user-value" name="contents-insurance" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="life-insurance">Life Insurance</label>
+                        <input type="number" id="life-insurance" class="expense insurance user-value" name="life-insurance" placeholder="₹" step="0.01" min="0"> 
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="pet-insurance">Pet Insurance</label>
+                        <input type="number" id="pet-insurance" class="expense insurance user-value" name="pet-insurance" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="boiler-cover">Boiler Cover</label>
+                        <input type="number" id="boiler-cover" class="expense insurance user-value" name="boiler-cover" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="vehicle-insurance">Vehicle Insurance</label>
+                        <input type="number" id="vehicle-insurance" class="expense insurance user-value" name="vehicle-insurance" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="insurance-btn">
+                        <button class="add-box-btn expense" id="insurance" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Subscriptions</h2></summary>
+                    <div class="user-input">
+                        <label for="internet">Internet</label>
+                        <input type="number" id="internet" class="expense subscriptions user-value" name="internet" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="home-phone">Home Phone</label>
+                        <input type="number" id="home-phone" class="expense subscriptions user-value" name="home-phone" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="tv-subscriptions">TV Services</label>
+                        <input type="number" id="tv-subscriptions" class="expense subscriptions user-value" name="tv-subscriptions" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="streaming">Streaming Services</label>
+                        <input type="number" id="streaming" class="expense subscriptions user-value" name="streaming" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="tv-licence">TV Licence</label>
+                        <input type="number" id="tv-licence" class="expense subscriptions user-value" name="tv-licence" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="mobile-phone">Mobile Phone</label>
+                        <input type="number" id="mobile-phone" class="expense subscriptions user-value" name="mobile-phone" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="gym-membership">Gym Membership</label>
+                        <input type="number" id="gym-membership" class="expense subscriptions user-value" name="gym-membership" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="subscriptions-btn"> 
+                        <button class="add-box-btn expense" id="subscriptions" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Transport</h2></summary>
+                    <div class="user-input">
+                        <label for="vehicle-tax">Vehicle Tax</label>
+                        <input type="number" id="vehicle-tax" class="expense transport user-value" name="vehicle-tax" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="fuel">Fuel</label>
+                        <input type="number" id="fuel" class="expense transport user-value" name="fuel" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="public-transport">Public Transport</label>
+                        <input type="number" id="public-transport" class="expense transport user-value" name="public-transport" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="transport-btn">
+                        <button class="add-box-btn expense" id="transport" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Living Costs</h2></summary>
+                    <div class="user-input">
+                        <label for="groceries">Groceries</label>
+                        <input type="number" id="groceries" class="expense living user-value" name="groceries" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="clothing-footwear">Clothing & Footwear</label>
+                        <input type="number" id="clothing-footwear" class="expense living user-value" name="clothing-footwear" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="personal-healthcare">Personal Healthcare</label>
+                        <input type="number" id="personal-healthcare" class="expense living user-value" name="personal-healthcare" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="beauty-grooming">Beauty & Grooming</label>
+                        <input type="number" id="beauty-grooming" class="expense living user-value" name="beauty-grooming" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="living-btn">
+                        <button class="add-box-btn expense" id="living" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Family</h2></summary>
+                    <div class="user-input">
+                        <label for="child-care">Child Care</label>
+                        <input type="number" id="child-care" class="expense family user-value" name="child-care" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="vet-bills">Vet Bills</label>
+                        <input type="number" id="vet-bills" class="expense family user-value" name="vet-bills" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="pet-food">Pet Food</label>
+                        <input type="number" id="pet-food" class="expense family user-value" name="pet-food" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="family-btn">
+                        <button class="add-box-btn expense" id="family" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <details class="drop-down">
+                    <summary class="drop"><h2>Leisure</h2></summary>
+                    <div class="user-input">
+                        <label for="eating-out">Eating Out</label>
+                        <input type="number" id="eating-out" class="expense leisure user-value" name="eating-out" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="days-out">Days Out</label>
+                        <input type="number" id="days-out" class="expense leisure user-value" name="days-out" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="nights-out">Nights Out</label>
+                        <input type="number" id="nights-out" class="expense leisure user-value" name="nights-out" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="user-input">
+                        <label for="takeaway-food">Takeaway Food</label>
+                        <input type="number" id="takeaway-food" class="expense leisure user-value" name="takeaway-food" placeholder="₹" step="0.01" min="0">
+                        <select name="period" class="period">
+                            <option value="daily">Daily</option>
+                            <option value="weekly">Weekly</option>
+                            <option value="monthly" selected>Monthly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
+                    </div>
+                    <div class="add-box" id="leisure-btn">
+                        <button class="add-box-btn expense" id="leisure" type="button">+</button>
+                        <p>Add more boxes</p>
+                    </div>
+                </details>
+                <div id="calculate">
+                    <button id="calc-btn" type="button">Calculate</button>
+                    <button id="reset-btn" type="reset">Reset Form</button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- Results section -->
+    <div>
+        <div id="results">
+        </div>
+        <!-- Pie chart container -->
+        <div id="chart">
+        </div>
+    </div>
+    <footer>
+        <p>Copyright<span> &#xa9;</span> 2025 Avni Mishra (Developer)</p>
+    </footer>    
+    <script src="assets/js/script.js"></script>    
+</body>
+</html>
